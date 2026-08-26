@@ -1,0 +1,13 @@
+# ==============================================================================
+# Cloudflare R2 Remote State Backend Configuration Template
+# ==============================================================================
+# Copy this file to backend.tfvars (ignored by git) and use with:
+#   terraform init -backend-config=backend.tfvars
+# ==============================================================================
+
+# Cloudflare R2 S3-Compatible Endpoint (replace <CLOUDFLARE_ACCOUNT_ID> with your Account ID)
+endpoint = "https://<CLOUDFLARE_ACCOUNT_ID>.r2.cloudflarestorage.com"
+
+# Cloudflare R2 API Token credentials (generated under R2 > Manage R2 API Tokens)
+access_key = "your-r2-access-key-id"
+secret_key = "your-r2-secret-access-key"

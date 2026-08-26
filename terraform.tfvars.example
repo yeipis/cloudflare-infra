@@ -1,0 +1,21 @@
+# ==============================================================================
+# Cloudflare Infrastructure Variables Template
+# ==============================================================================
+# Copy this file to terraform.tfvars or use .env with TF_VAR_* environment variables.
+# NEVER commit terraform.tfvars containing real credentials to version control.
+# ==============================================================================
+
+# Cloudflare API Token (Requires Zone:Edit, DNS:Edit, Rulesets:Edit, Email Routing:Edit permissions)
+cloudflare_api_token = "your-cloudflare-api-token"
+
+# Cloudflare Account ID (Found in Cloudflare Dashboard URL or Zone overview)
+cloudflare_account_id = "your-cloudflare-account-id"
+
+# Cloudflare Zone ID for yeipi.dev
+cloudflare_zone_id = "your-cloudflare-zone-id"
+
+# Primary domain
+domain = "yeipi.dev"
+
+# Destination email for Email Routing forwardings
+destination_email = "juanpablo.fernandezdelatorre04@gmail.com"
