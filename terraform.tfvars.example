@@ -1,7 +1,7 @@
 # ==============================================================================
 # Cloudflare Infrastructure Variables Template
 # ==============================================================================
-# Copy this file to terraform.tfvars or use .env with TF_VAR_* environment variables.
+# Copy this file to terraform.tfvars and fill in your actual values.
 # NEVER commit terraform.tfvars containing real credentials to version control.
 # ==============================================================================
 
