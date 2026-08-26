@@ -75,19 +75,23 @@ cloudflare-infra/
 │   ├── dns/                          # DNS records (A, AAAA, CNAME, MX, TXT)
 │   │   ├── main.tf
 │   │   ├── variables.tf
-│   │   └── outputs.tf
+│   │   ├── outputs.tf
+│   │   └── versions.tf
 │   ├── rulesets/                     # WAF Custom, Rate Limiting & Cache Rules
 │   │   ├── main.tf
 │   │   ├── variables.tf
-│   │   └── outputs.tf
+│   │   ├── outputs.tf
+│   │   └── versions.tf
 │   ├── email/                        # Email Routing forwarding rules
 │   │   ├── main.tf
 │   │   ├── variables.tf
-│   │   └── outputs.tf
+│   │   ├── outputs.tf
+│   │   └── versions.tf
 │   └── zone-settings/                # SSL Strict, TLS 1.2+, HTTP/3, Brotli
 │       ├── main.tf
 │       ├── variables.tf
-│       └── outputs.tf
+│       ├── outputs.tf
+│       └── versions.tf
 ├── .gitignore                        # Secret & state file leak prevention
 ├── LICENSE                           # MIT License
 ├── README.md                         # Project documentation and quickstart
@@ -240,6 +244,38 @@ Configure the following secrets under **Settings** > **Secrets and variables** >
 * `min_tls_version = "1.2"`
 * `http3 = "on"`
 * `brotli = "on"`
+
+---
+
+## 📚 Official Documentation & References
+
+### Cloudflare Terraform Provider (v5)
+* [Cloudflare Provider on Terraform Registry](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) — Official provider documentation, schemas, and argument references.
+* [Cloudflare Provider v5 Migration Guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/migration_v5) — Guide detailing breaking changes and Plugin Framework transitions in v5.
+* [`cloudflare_dns_record` Documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) — Resource specification for DNS management.
+* [`cloudflare_ruleset` Documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) — Resource specification for WAF, Rate Limiting, and Cache rulesets.
+* [`cloudflare_email_routing_rule` Documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/email_routing_rule) — Resource specification for Email Routing.
+* [`cloudflare_zone_setting` Documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone_setting) — Resource specification for TLS, SSL, HTTP/3, and Brotli settings.
+
+### Cloudflare Developer Documentation
+* [Cloudflare DNS Documentation](https://developers.cloudflare.com/dns/) — DNS management, Anycast routing, and proxying concepts.
+* [Cloudflare Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) — Ruleset phases, execution order, and Wireshark-inspired expression language.
+* [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/) — Custom rules, managed rules, and threat mitigation.
+* [Cloudflare Rate Limiting Rules](https://developers.cloudflare.com/waf/rate-limiting-rules/) — DDoS mitigation and API request rate limiting.
+* [Cloudflare Cache Rules](https://developers.cloudflare.com/cache/how-to/cache-rules/) — Edge TTL, cache keys, and asset caching strategies.
+* [Cloudflare Email Routing](https://developers.cloudflare.com/email-routing/) — Inbound routing, custom addresses, and DNS MX/SPF setup.
+* [Cloudflare R2 S3 Compatibility API](https://developers.cloudflare.com/r2/api/s3/api/) — Documentation on S3 API endpoints and authentication for R2 storage.
+* [Cloudflare SSL/TLS Encryption Modes](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/) — Guide on Full, Strict, and Flexible SSL encryption modes.
+
+### HashiCorp Terraform & OpenTofu
+* [Terraform S3 Backend Reference](https://developer.hashicorp.com/terraform/language/settings/backends/s3) — Configuration parameters for S3-compatible remote state backends.
+* [Terraform Module Design Best Practices](https://developer.hashicorp.com/terraform/language/modules/develop) — Structural standards for reusable Terraform modules.
+* [OpenTofu Documentation](https://opentofu.org/docs/) — Community-driven open-source fork documentation.
+
+### GitHub Actions CI/CD
+* [GitHub Actions Workflow Syntax](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions) — Complete reference for `.github/workflows/` YAML syntax.
+* [Encrypted Secrets in GitHub Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) — Securing sensitive API tokens and credentials in CI/CD runners.
+* [`hashicorp/setup-terraform` GitHub Action](https://github.com/hashicorp/setup-terraform) — Official HashiCorp action for executing Terraform commands in CI/CD.
 
 ---
 
