@@ -2,8 +2,8 @@ output "records_summary" {
   description = "Summary map of managed DNS record IDs by category"
   value = {
     a_records     = [for k, r in cloudflare_dns_record.a_records : "${r.name} -> ${r.content} (ID: ${r.id})"]
-    aaaa_records  = concat([for k, r in cloudflare_dns_record.aaaa_records : "${r.name} -> ${r.content} (ID: ${r.id})"], ["${cloudflare_dns_record.api.name}.${var.domain} -> ${cloudflare_dns_record.api.content} (ID: ${cloudflare_dns_record.api.id})"])
-    cname_records = [for k, r in cloudflare_dns_record.cnames : "${r.name}.${var.domain} -> ${r.content} (ID: ${r.id})"]
+    aaaa_records  = concat([for k, r in cloudflare_dns_record.aaaa_records : "${r.name} -> ${r.content} (ID: ${r.id})"], ["${cloudflare_dns_record.api.name} -> ${cloudflare_dns_record.api.content} (ID: ${cloudflare_dns_record.api.id})"])
+    cname_records = [for k, r in cloudflare_dns_record.cnames : "${r.name} -> ${r.content} (ID: ${r.id})"]
     mx_records    = [for k, r in cloudflare_dns_record.mx_records : "Priority ${r.priority}: ${r.content} (ID: ${r.id})"]
     txt_records   = [for k, r in cloudflare_dns_record.txt_records : "${r.name} (ID: ${r.id})"]
   }
