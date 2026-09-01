@@ -28,3 +28,9 @@ module "zone_settings" {
 
   zone_id = var.cloudflare_zone_id
 }
+
+module "workers_kv" {
+  source = "./modules/workers-kv"
+
+  account_id = var.cloudflare_account_id
+}

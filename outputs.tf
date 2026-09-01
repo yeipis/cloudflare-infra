@@ -14,7 +14,7 @@ output "dns_records" {
 }
 
 output "rulesets" {
-  description = "Deployed Cloudflare Ruleset IDs (WAF, Rate Limiting, Cache)"
+  description = "Deployed Cloudflare Ruleset IDs (WAF, Rate Limiting, Cache, Security Headers, Dynamic Redirects)"
   value       = module.rulesets.ruleset_ids
 }
 
@@ -26,4 +26,9 @@ output "email_forwardings" {
 output "zone_settings" {
   description = "Configured zone security and performance settings"
   value       = module.zone_settings.applied_settings
+}
+
+output "ai_cache_kv_id" {
+  description = "ID del KV Namespace para pegar en workers/ai-proxy/wrangler.jsonc"
+  value       = module.workers_kv.ai_cache_kv_id
 }
