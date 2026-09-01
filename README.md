@@ -93,6 +93,7 @@ cloudflare-infra/
 │       ├── outputs.tf
 │       └── versions.tf
 ├── .gitignore                        # Secret & state file leak prevention
+├── AGENTS.md                         # Universal AI agent instructions & context rules
 ├── LICENSE                           # MIT License
 ├── README.md                         # Project documentation and quickstart
 ├── backend.tf                        # S3-compatible backend targeting Cloudflare R2
@@ -133,9 +134,17 @@ To configure the zero-cost remote backend on Cloudflare R2:
 
 ---
 
-## 🚀 Quickstart & Local Usage
+## 🚀 Quickstart & Local Usage (New Workstation Setup)
 
-### 1. Configure Local Variables
+When setting up this project on any workstation, follow these simple steps:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yeipis/cloudflare-infra.git
+cd cloudflare-infra
+```
+
+### 2. Configure Local Variables
 
 Copy the example templates:
 
@@ -167,21 +176,44 @@ access_key = "your_r2_access_key_id"
 secret_key = "your_r2_secret_access_key"
 ```
 
-### 2. Initialize and Apply Infrastructure
+### 3. Initialize and Apply Infrastructure
 
-```bash
-# Initialize Terraform and connect to R2 remote backend
-terraform init -backend-config=backend.tfvars
+```powershell
+# Initialize Terraform and connect to R2 remote backend (use quotes in PowerShell)
+terraform init "-backend-config=backend.tfvars"
 
 # Validate syntax and configuration
 terraform validate
 
-# Preview changes
+# Preview changes against live Cloudflare state
 terraform plan
 
 # Apply infrastructure changes
 terraform apply
 ```
+
+---
+
+## 🔄 GitOps & Contribution Workflow
+
+To make any infrastructure changes in the future, follow this standard GitOps workflow:
+
+```mermaid
+flowchart LR
+    A["1. Create Branch\n(git checkout -b)"] --> B["2. Edit .tf Files\n(or ask AI Agent)"]
+    B --> C["3. Verify Locally\n(terraform plan)"]
+    C --> D["4. Open Pull Request\n(GitHub Actions validates plan)"]
+    D --> E["5. Merge to Main\n(Auto-applied in 15s)"]
+```
+
+1. **Create a feature branch:**
+   ```bash
+   git checkout -b feat/add-new-subdomain
+   ```
+2. **Make your changes:** Edit or add resources in the appropriate module under `modules/`.
+3. **Verify the plan locally:** Run `terraform plan` to ensure zero unintended changes.
+4. **Push and open a Pull Request:** GitHub Actions runs `terraform-check.yml` to lint, validate, and post the execution plan in CI.
+5. **Merge into `main`:** GitHub Actions runs `terraform-deploy.yml` to automatically apply changes to Cloudflare edge in ~15 seconds.
 
 ---
 
@@ -244,6 +276,18 @@ Configure the following secrets under **Settings** > **Secrets and variables** >
 * `min_tls_version = "1.2"`
 * `http3 = "on"`
 * `brotli = "on"`
+
+---
+
+## 🤖 Universal AI Agent Support (`AGENTS.md`)
+
+This repository includes an [AGENTS.md](AGENTS.md) file following the open repository guidelines standard. It provides immediate contextual awareness, coding standards, and security invariants for:
+* **Google Antigravity / Gemini CLI**
+* **Claude / Claude Code**
+* **ChatGPT / OpenAI Agents**
+* **Cursor, Windsurf, Aider, Devin, and OpenHands**
+
+Any agent initialized in this repository will automatically adhere to the Cloudflare Provider v5 conventions, English-only documentation standards, and public security guardrails.
 
 ---
 
