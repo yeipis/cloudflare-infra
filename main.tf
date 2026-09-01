@@ -13,6 +13,7 @@ module "rulesets" {
   source = "./modules/rulesets"
 
   zone_id = var.cloudflare_zone_id
+  domain  = var.domain
 }
 
 module "email" {

@@ -121,3 +121,130 @@ resource "cloudflare_ruleset" "cache_settings" {
     }
   ]
 }
+
+# ==============================================================================
+# Cloudflare Rulesets - Security Headers (Phase: http_response_headers_transform)
+# ==============================================================================
+resource "cloudflare_ruleset" "security_headers" {
+  zone_id     = var.zone_id
+  name        = "${var.domain} - Security Headers"
+  description = "Enforce HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy for A+ Rating"
+  kind        = "zone"
+  phase       = "http_response_headers_transform"
+
+  rules = [
+    {
+      ref         = "apply_security_headers"
+      description = "[Security Headers] Enforce HSTS, Frame Protection, MIME nosniff, and Permissions Policy"
+      action      = "rewrite"
+      enabled     = true
+      expression  = "true"
+      action_parameters = {
+        headers = {
+          "Strict-Transport-Security" = {
+            operation = "set"
+            value     = "max-age=31536000; includeSubDomains; preload"
+          }
+          "X-Frame-Options" = {
+            operation = "set"
+            value     = "DENY"
+          }
+          "X-Content-Type-Options" = {
+            operation = "set"
+            value     = "nosniff"
+          }
+          "Referrer-Policy" = {
+            operation = "set"
+            value     = "strict-origin-when-cross-origin"
+          }
+          "Permissions-Policy" = {
+            operation = "set"
+            value     = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+          }
+          "Content-Security-Policy" = {
+            operation = "set"
+            value     = "upgrade-insecure-requests"
+          }
+        }
+      }
+    }
+  ]
+}
+
+# ==============================================================================
+# Cloudflare Rulesets - Dynamic Redirects (Phase: http_request_dynamic_redirect)
+# ==============================================================================
+resource "cloudflare_ruleset" "dynamic_redirects" {
+  zone_id     = var.zone_id
+  name        = "${var.domain} - Dynamic Redirects"
+  description = "Portfolio shortlinks and social profile redirects"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules = [
+    {
+      ref         = "redirect_github"
+      description = "[Redirect] /github & /gh to GitHub Profile"
+      action      = "redirect"
+      enabled     = true
+      expression  = "(http.request.uri.path eq \"/github\") or (http.request.uri.path eq \"/gh\")"
+      action_parameters = {
+        from_value = {
+          status_code           = 301
+          preserve_query_string = false
+          target_url = {
+            value = var.github_url
+          }
+        }
+      }
+    },
+    {
+      ref         = "redirect_linkedin"
+      description = "[Redirect] /linkedin & /in to LinkedIn Profile"
+      action      = "redirect"
+      enabled     = true
+      expression  = "(http.request.uri.path eq \"/linkedin\") or (http.request.uri.path eq \"/in\")"
+      action_parameters = {
+        from_value = {
+          status_code           = 301
+          preserve_query_string = false
+          target_url = {
+            value = var.linkedin_url
+          }
+        }
+      }
+    },
+    {
+      ref         = "redirect_cv"
+      description = "[Redirect] /cv & /curriculum to Resume/CV"
+      action      = "redirect"
+      enabled     = true
+      expression  = "(http.request.uri.path eq \"/cv\") or (http.request.uri.path eq \"/curriculum\")"
+      action_parameters = {
+        from_value = {
+          status_code           = 302
+          preserve_query_string = false
+          target_url = {
+            value = var.cv_url
+          }
+        }
+      }
+    },
+    {
+      ref         = "redirect_contact"
+      description = "[Redirect] /contact, /mail & /email to Mailto"
+      action      = "redirect"
+      enabled     = true
+      expression  = "(http.request.uri.path eq \"/contact\") or (http.request.uri.path eq \"/mail\") or (http.request.uri.path eq \"/email\")"
+      action_parameters = {
+        from_value = {
+          status_code           = 302
+          preserve_query_string = false
+          target_url = {
+            value = "mailto:${var.contact_email}"
+          }
+        }
+      }
+    }
+  ]
+}
