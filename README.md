@@ -280,12 +280,15 @@ Configure the following secrets under **Settings** > **Secrets and variables** >
 * **Cache Rules (`http_request_cache_settings`):**
   * `[Cache] Optimización de Imágenes (Ignorar Query)`: 2-hour Edge TTL for `.png`, `.jpg`, `.svg`, `.webp`, and `/img/`, ignoring query strings in the cache key.
 * **Security Headers (`http_response_headers_transform`):**
-  *(Enforces RFC 6797 compliance strictly over HTTPS for an **A+** score on SecurityHeaders.com)*
+  *(Enforces RFC 6797 & OWASP Secure Headers compliance strictly over HTTPS for an **A+** score on SecurityHeaders.com)*
   * `Strict-Transport-Security`: `max-age=31536000; includeSubDomains; preload`
   * `X-Frame-Options`: `DENY`
   * `X-Content-Type-Options`: `nosniff`
+  * `X-XSS-Protection`: `0` (OWASP/Mozilla recommendation)
   * `Referrer-Policy`: `strict-origin-when-cross-origin`
-  * `Permissions-Policy`: Restricts accelerometer, camera, geolocation, gyroscope, magnetometer, microphone, payment, usb.
+  * `Cross-Origin-Opener-Policy`: `same-origin` (COOP Spectre mitigation)
+  * `Cross-Origin-Resource-Policy`: `same-site` (CORP asset isolation)
+  * `Permissions-Policy`: Restricts camera, micro, gps, payment, and disables FLoC cohort tracking (`interest-cohort=()`).
   * `Content-Security-Policy`: `upgrade-insecure-requests`
 * **Dynamic Redirects (`http_request_dynamic_redirect`):**
   *(Scoped exclusively to `yeipi.dev` / `www.yeipi.dev` to avoid intercepting API subdomains)*

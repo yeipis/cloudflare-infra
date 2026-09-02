@@ -159,13 +159,25 @@ resource "cloudflare_ruleset" "security_headers" {
             operation = "set"
             value     = "nosniff"
           }
+          "X-XSS-Protection" = {
+            operation = "set"
+            value     = "0"
+          }
           "Referrer-Policy" = {
             operation = "set"
             value     = "strict-origin-when-cross-origin"
           }
+          "Cross-Origin-Opener-Policy" = {
+            operation = "set"
+            value     = "same-origin"
+          }
+          "Cross-Origin-Resource-Policy" = {
+            operation = "set"
+            value     = "same-site"
+          }
           "Permissions-Policy" = {
             operation = "set"
-            value     = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+            value     = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
           }
           "Content-Security-Policy" = {
             operation = "set"
